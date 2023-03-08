@@ -1,6 +1,6 @@
-
 interface ValueObjectProps {
-  [index: string]: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly [index: string]: any;
 }
 
 /**
@@ -9,23 +9,25 @@ interface ValueObjectProps {
  */
 
 export abstract class ValueObject<T extends ValueObjectProps> {
-  public props: T;
+  props: T;
 
-  constructor (props: T) {
-    let baseProps: any = {
-      ...props, 
-    }
+  constructor(props: T) {
+    const baseProps = {
+      ...props,
+    };
 
     this.props = baseProps;
   }
 
-  public equals (vo?: ValueObject<T>) : boolean {
+  equals(vo?: ValueObject<T>): boolean {
     if (vo === null || vo === undefined) {
       return false;
     }
+
     if (vo.props === undefined) {
       return false;
     }
+
     return JSON.stringify(this.props) === JSON.stringify(vo.props);
   }
 }
