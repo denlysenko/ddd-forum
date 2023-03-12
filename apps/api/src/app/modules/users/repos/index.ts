@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../../shared/infra/database/prisma';
 import { PrismaUserRepo } from './implementations/prismaUserRepo';
 
-const client = new PrismaClient();
-const userRepo = new PrismaUserRepo(client);
+const userRepo = new PrismaUserRepo(prisma);
 
 export { userRepo };

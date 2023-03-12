@@ -52,6 +52,27 @@
     "docker-build": {
       "dependsOn": ["build"],
       "command": "docker build -f apps/api/Dockerfile . -t api"
+    },
+    "migrate-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate dev --schema ./src/prisma/schema.prisma",
+        "cwd": "apps/api"
+      }
+    },
+    "migrate-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate up --schema ./src/prisma/schema.prisma",
+        "cwd": "apps/api"
+      }
+    },
+    "gen-client": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma generate --schema ./src/prisma/schema.prisma",
+        "cwd": "apps/api"
+      }
     }
   },
   "tags": []
