@@ -1,0 +1,11 @@
+/node_modules/
+/dist/
+.dockerignore
+.git
+.gitignore
+.vscode
+.github
+docker-compose*.yml
+*.md
+LICENSE
+.env

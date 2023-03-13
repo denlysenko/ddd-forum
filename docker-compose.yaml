@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      target: build
+    container_name: ddd_forum_api
+    env_file: .env
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - NODE_ENV=development
+      - DDD_FORUM_IS_PRODUCTION=false
+      - DDD_FORUM_APP_SECRET=${DDD_FORUM_APP_SECRET}
+      - DDD_FORUM_REDIS_PORT=6379
+      - DDD_FORUM_REDIS_URL=redis
+      - DATABASE_URL=postgresql://${DDD_FORUM_DB_USER}:${DDD_FORUM_DB_PASS}@postgres:5432/${DDD_FORUM_DB_DEV_DB_NAME}?schema=public&connection_limit=5&pool_timeout=10
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm start -- api
+
+  postgres:
+    container_name: ddd_forum_postgres
+    image: postgres:15.2
+    env_file: .env
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${DDD_FORUM_DB_USER}
+      - POSTGRES_PASSWORD=${DDD_FORUM_DB_PASS}
+      - POSTGRES_DB=${DDD_FORUM_DB_DEV_DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    container_name: ddd_forum_redis
+    image: redis:7.0-alpine
+    ports:
+      - '6379:6379'
+
+volumes:
+  postgres_data:
+    external: false
