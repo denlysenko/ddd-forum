@@ -22,9 +22,9 @@ export const getMemberByUserNameSchema = {
               type: 'object',
               properties: {
                 username: { type: 'string' },
-                isEmailVerified: { type: ['boolean', 'null'] },
-                isAdminUser: { type: ['boolean', 'null'] },
-                isDeleted: { type: ['boolean', 'null'] },
+                isEmailVerified: { type: 'boolean' },
+                isAdminUser: { type: 'boolean' },
+                isDeleted: { type: 'boolean' },
               },
             },
           },

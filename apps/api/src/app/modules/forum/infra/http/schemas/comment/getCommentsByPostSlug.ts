@@ -14,43 +14,40 @@ export const getCommentsByPostSlugSchema = {
       type: 'object',
       description: 'Post comments by post slug',
       properties: {
-        type: 'object',
-        properties: {
-          comments: {
-            type: 'array',
-            items: {
-              $id: 'comment',
-              type: 'object',
-              properties: {
-                postSlug: { type: 'string' },
-                postTitle: { type: 'string' },
-                commentId: { type: 'string' },
-                parentCommentId: { type: ['string', 'null'] },
-                text: { type: 'string' },
-                member: {
-                  type: 'object',
-                  properties: {
-                    reputation: { type: 'number' },
-                    user: {
-                      type: 'object',
-                      properties: {
-                        username: { type: 'string' },
-                        isEmailVerified: { type: ['boolean', 'null'] },
-                        isAdminUser: { type: ['boolean', 'null'] },
-                        isDeleted: { type: ['boolean', 'null'] },
-                      },
+        comments: {
+          type: 'array',
+          items: {
+            $id: 'comment',
+            type: 'object',
+            properties: {
+              postSlug: { type: 'string' },
+              postTitle: { type: 'string' },
+              commentId: { type: 'string' },
+              parentCommentId: { type: ['string', 'null'] },
+              text: { type: 'string' },
+              member: {
+                type: 'object',
+                properties: {
+                  reputation: { type: 'number' },
+                  user: {
+                    type: 'object',
+                    properties: {
+                      username: { type: 'string' },
+                      isEmailVerified: { type: 'boolean' },
+                      isAdminUser: { type: 'boolean' },
+                      isDeleted: { type: 'boolean' },
                     },
                   },
                 },
-                createdAt: { type: 'string', format: 'date-time' },
-                childComments: {
-                  type: 'array',
-                  items: { $ref: 'comment#' },
-                },
-                points: { type: 'number' },
-                wasUpvotedByMe: { type: 'boolean' },
-                wasDownvotedByMe: { type: 'boolean' },
               },
+              createdAt: { type: 'string', format: 'date-time' },
+              childComments: {
+                type: 'array',
+                items: { $ref: 'comment#' },
+              },
+              points: { type: 'number' },
+              wasUpvotedByMe: { type: 'boolean' },
+              wasDownvotedByMe: { type: 'boolean' },
             },
           },
         },

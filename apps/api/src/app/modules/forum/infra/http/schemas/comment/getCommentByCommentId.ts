@@ -15,6 +15,7 @@ export const getCommentByCommentIdSchema = {
       properties: {
         comment: {
           type: 'object',
+          $id: 'comment',
           properties: {
             postSlug: { type: 'string' },
             postTitle: { type: 'string' },
@@ -30,9 +31,9 @@ export const getCommentByCommentIdSchema = {
                   type: 'object',
                   properties: {
                     username: { type: 'string' },
-                    isEmailVerified: { type: ['boolean', 'null'] },
-                    isAdminUser: { type: ['boolean', 'null'] },
-                    isDeleted: { type: ['boolean', 'null'] },
+                    isEmailVerified: { type: 'boolean' },
+                    isAdminUser: { type: 'boolean' },
+                    isDeleted: { type: 'boolean' },
                   },
                 },
               },
