@@ -1,13 +1,16 @@
-
-import { Either, Result } from "../../../../../shared/core/Result";
-import { DownvotePostErrors } from "./DownvotePostErrors";
-import { AppError } from "../../../../../shared/core/AppError";
+import type { UnexpectedError } from '../../../../../shared/core/AppError';
+import type { Either, Result } from '../../../../../shared/core/Result';
+import type {
+  AlreadyDownvotedError,
+  MemberNotFoundError,
+  PostNotFoundError,
+} from './DownvotePostErrors';
 
 export type DownvotePostResponse = Either<
-  DownvotePostErrors.MemberNotFoundError |
-  DownvotePostErrors.AlreadyDownvotedError |
-  DownvotePostErrors.PostNotFoundError |
-  AppError.UnexpectedError |
-  Result<any>,
+  | MemberNotFoundError
+  | AlreadyDownvotedError
+  | PostNotFoundError
+  | UnexpectedError
+  | Result<any>,
   Result<void>
->
+>;

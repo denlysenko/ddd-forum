@@ -10,6 +10,7 @@ export type DownvoteCommentResponse = Either<
   | CommentNotFoundError
   | MemberNotFoundError
   | PostNotFoundError
-  | UnexpectedError,
+  | UnexpectedError
+  | Result<any>,
   Result<void>
 >;

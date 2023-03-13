@@ -10,6 +10,7 @@ export type UpvoteCommentResponse = Either<
   | PostNotFoundError
   | CommentNotFoundError
   | MemberNotFoundError
-  | UnexpectedError,
+  | UnexpectedError
+  | Result<any>,
   Result<void>
 >;

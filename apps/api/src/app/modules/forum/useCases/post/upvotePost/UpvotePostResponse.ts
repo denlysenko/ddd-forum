@@ -10,6 +10,7 @@ export type UpvotePostResponse = Either<
   | MemberNotFoundError
   | AlreadyUpvotedError
   | PostNotFoundError
-  | UnexpectedError,
+  | UnexpectedError
+  | Result<any>,
   Result<void>
 >;

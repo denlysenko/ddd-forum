@@ -1,5 +1,5 @@
 import { Result } from '../../../../../shared/core/Result';
-import { UseCaseError } from '../../../../../shared/core/UseCaseError';
+import type { UseCaseError } from '../../../../../shared/core/UseCaseError';
 
 export class MemberNotFoundError extends Result<UseCaseError> {
   constructor() {

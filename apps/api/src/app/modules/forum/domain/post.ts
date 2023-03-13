@@ -3,7 +3,10 @@ import { Guard, IGuardArgument } from '../../../shared/core/Guard';
 import { Either, left, Result, right } from '../../../shared/core/Result';
 import { AggregateRoot } from '../../../shared/domain/AggregateRoot';
 import type { UniqueEntityID } from '../../../shared/domain/UniqueEntityID';
-import { EditPostErrors } from '../useCases/post/editPost/EditPostErrors';
+import {
+  InvalidPostTypeOperationError,
+  PostSealedError,
+} from '../useCases/post/editPost/EditPostErrors';
 import type { Comment } from './comment';
 import { Comments } from './comments';
 import { CommentPosted } from './events/commentPosted';
@@ -21,9 +24,7 @@ import { PostVote } from './postVote';
 import { PostVotes } from './postVotes';
 
 export type UpdatePostOrLinkResult = Either<
-  | EditPostErrors.InvalidPostTypeOperationError
-  | EditPostErrors.PostSealedError
-  | Result<void>,
+  InvalidPostTypeOperationError | PostSealedError | Result<void>,
   Result<void>
 >;
 
@@ -156,11 +157,11 @@ export class Post extends AggregateRoot<PostProps> {
 
   updateText(postText: PostText): UpdatePostOrLinkResult {
     if (!this.isTextPost()) {
-      return left(new EditPostErrors.InvalidPostTypeOperationError());
+      return left(new InvalidPostTypeOperationError());
     }
 
     if (this.hasComments()) {
-      return left(new EditPostErrors.PostSealedError());
+      return left(new PostSealedError());
     }
 
     const guardResult = Guard.againstNullOrUndefined(postText, 'postText');
@@ -175,11 +176,11 @@ export class Post extends AggregateRoot<PostProps> {
 
   updateLink(postLink: PostLink): UpdatePostOrLinkResult {
     if (!this.isLinkPost()) {
-      return left(new EditPostErrors.InvalidPostTypeOperationError());
+      return left(new InvalidPostTypeOperationError());
     }
 
     if (this.hasComments()) {
-      return left(new EditPostErrors.PostSealedError());
+      return left(new PostSealedError());
     }
 
     const guardResult = Guard.againstNullOrUndefined(postLink, 'postLink');

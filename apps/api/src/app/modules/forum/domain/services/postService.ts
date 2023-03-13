@@ -1,6 +1,6 @@
 import { Either, left, Result, right } from '../../../../shared/core/Result';
 import type { DownvoteCommentResponse } from '../../useCases/comments/downvoteComment/DownvoteCommentResponse';
-import type { UpvoteCommentResponse } from '../../useCases/comments/upvoteComment/UpvoteCommentResonse';
+import type { UpvoteCommentResponse } from '../../useCases/comments/upvoteComment/UpvoteCommentResponse';
 import type { DownvotePostResponse } from '../../useCases/post/downvotePost/DownvotePostResponse';
 import type { UpvotePostResponse } from '../../useCases/post/upvotePost/UpvotePostResponse';
 import { Comment } from '../comment';
