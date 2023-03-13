@@ -60,13 +60,6 @@
         "cwd": "apps/api"
       }
     },
-    "migrate-up": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx prisma migrate up --schema ./src/prisma/schema.prisma",
-        "cwd": "apps/api"
-      }
-    },
     "gen-client": {
       "executor": "nx:run-commands",
       "options": {
