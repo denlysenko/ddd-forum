@@ -1,6 +1,6 @@
 import type React from 'react';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as usersOperators from '../../../modules/users/redux/operators';
 import type { UsersState } from '../../../modules/users/redux/states';
@@ -19,7 +19,18 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   // Add your own authentication on the below line.
   const isLoggedIn = users.isAuthenticated;
 
-  return isLoggedIn ? <Component /> : <Navigate to="/" />;
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+        )
+      }
+    />
+  );
 };
 
 function mapStateToProps({ users }: { users: UsersState }) {

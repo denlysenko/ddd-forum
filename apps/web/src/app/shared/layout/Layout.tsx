@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 // import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { siteMetaData } from '../../config/siteMetaData';
 import withUsersService from '../../modules/users/hocs/withUsersService';
 import './Layout.scss';
 
@@ -15,7 +16,7 @@ class Layout extends React.Component<{
         <div className="app-layout-inner">
           {
             <Helmet>
-              <title>{'siteMetaData.title'}</title>
+              <title>{siteMetaData.title}</title>
               {/* TODO: The rest */}
               <link
                 href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,500,700,700i&display=swap"
