@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import type { UnexpectedError } from '../../../../shared/core/AppError';
+import { UnexpectedError } from '../../../../shared/core/AppError';
+import type { Result } from '../../../../shared/core/Result';
 import { BaseController } from '../../../../shared/infra/http/models/BaseController';
 import { TextUtils } from '../../../../shared/utils/TextUtils';
 import type { CreateUserDTO } from './CreateUserDTO';
@@ -47,10 +48,16 @@ export class CreateUserController extends BaseController {
               (error as EmailAlreadyExistsError).getErrorValue().message
             );
 
-          default:
+          case UnexpectedError:
             return this.fail(
               reply,
               (error as UnexpectedError).getErrorValue().message
+            );
+
+          default:
+            return this.clientError(
+              reply,
+              (error as Result<string>).getErrorValue()
             );
         }
       }

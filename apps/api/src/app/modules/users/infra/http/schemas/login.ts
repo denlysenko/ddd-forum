@@ -30,7 +30,6 @@ export const loginSchema = {
         },
         message: {
           type: 'string',
-          const: 'Unauthorized',
         },
       },
     },

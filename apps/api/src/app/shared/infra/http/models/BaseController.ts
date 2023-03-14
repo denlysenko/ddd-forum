@@ -20,7 +20,7 @@ export abstract class BaseController {
     if (dto) {
       reply.type('application/json');
       reply.code(200);
-      return dto;
+      return reply.send(dto);
     } else {
       reply.code(200);
     }

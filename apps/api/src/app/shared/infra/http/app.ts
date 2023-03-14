@@ -1,6 +1,7 @@
 import Sensible from '@fastify/sensible';
 import type { FastifyInstance } from 'fastify';
 import type { JWTClaims } from '../../../modules/users/domain/jwt';
+import { redisConnection } from '../../../modules/users/services/redis/redisConnection';
 import swagger from './api/swagger';
 import { v1Router } from './api/v1';
 
@@ -14,4 +15,5 @@ export async function app(fastify: FastifyInstance) {
   fastify.register(Sensible);
   fastify.register(swagger);
   fastify.register(v1Router, { prefix: '/api/v1' });
+  fastify.addHook('onClose', () => redisConnection.disconnect());
 }

@@ -40,7 +40,7 @@ export class PrismaUserRepo implements IUserRepo {
     });
 
     if (!!baseUser === false) {
-      throw new Error('User not found.');
+      return undefined;
     }
 
     return UserMap.toDomain(baseUser);

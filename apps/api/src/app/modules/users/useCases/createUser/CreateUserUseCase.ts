@@ -13,7 +13,10 @@ import {
 } from './CreateUserErrors';
 
 type Response = Either<
-  EmailAlreadyExistsError | UsernameTakenError | UnexpectedError | Result<void>,
+  | EmailAlreadyExistsError
+  | UsernameTakenError
+  | UnexpectedError
+  | Result<string>,
   Result<void>
 >;
 
@@ -61,6 +64,7 @@ export class CreateUserUseCase
         if (userNameTaken) {
           return left(new UsernameTakenError(username.value)) as Response;
         }
+        // skip error since user was not found
         // eslint-disable-next-line no-empty
       } catch (err) {}
 

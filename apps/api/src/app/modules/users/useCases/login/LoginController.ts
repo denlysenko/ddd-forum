@@ -1,4 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import { UnexpectedError } from '../../../../shared/core/AppError';
+import type { Result } from '../../../../shared/core/Result';
 import { BaseController } from '../../../../shared/infra/http/models/BaseController';
 import type { LoginDTO, LoginDTOResponse } from './LoginDTO';
 import {
@@ -30,9 +32,22 @@ export class LoginController extends BaseController {
         switch (error.constructor) {
           case UserNameDoesntExistError:
           case PasswordDoesntMatchError:
-            return this.unauthorized(reply, error.getErrorValue().message);
+            return this.unauthorized(
+              reply,
+              (error as UserNameDoesntExistError).getErrorValue().message
+            );
+
+          case UnexpectedError:
+            return this.fail(
+              reply,
+              (error as PasswordDoesntMatchError).getErrorValue().message
+            );
+
           default:
-            return this.fail(reply, error.getErrorValue().message);
+            return this.clientError(
+              reply,
+              (error as Result<string>).getErrorValue()
+            );
         }
       }
 

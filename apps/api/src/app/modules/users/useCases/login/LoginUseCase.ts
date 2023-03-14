@@ -13,7 +13,10 @@ import {
 } from './LoginErrors';
 
 type Response = Either<
-  PasswordDoesntMatchError | UserNameDoesntExistError | UnexpectedError,
+  | PasswordDoesntMatchError
+  | UserNameDoesntExistError
+  | UnexpectedError
+  | Result<string>,
   Result<LoginDTOResponse>
 >;
 
@@ -73,7 +76,7 @@ export class LoginUserUseCase implements UseCase<LoginDTO, Promise<Response>> {
         })
       );
     } catch (err) {
-      return left(new UnexpectedError(err.toString()));
+      return left(new UnexpectedError(err));
     }
   }
 }
