@@ -4,7 +4,7 @@ export const refreshTokenSchema = {
     type: 'object',
     additionalProperties: false,
     properties: {
-      refreshToken: { type: 'string' },
+      refreshToken: { type: 'string', minLength: 1 },
     },
   },
   response: {
