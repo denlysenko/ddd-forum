@@ -30,16 +30,28 @@ export class Guard {
         );
   }
 
-  static againstAtLeast(numChars: number, text: string): Result<GuardResponse> {
+  static againstAtLeast(
+    numChars: number,
+    text: string,
+    argumentName?: string
+  ): Result<GuardResponse> {
     return text.length >= numChars
       ? Result.ok<GuardResponse>()
-      : Result.fail<GuardResponse>(`Text is not at least ${numChars} chars.`);
+      : Result.fail<GuardResponse>(
+          `${argumentName ?? 'Text'} is not at least ${numChars} chars.`
+        );
   }
 
-  static againstAtMost(numChars: number, text: string): Result<GuardResponse> {
+  static againstAtMost(
+    numChars: number,
+    text: string,
+    argumentName?: string
+  ): Result<GuardResponse> {
     return text.length <= numChars
       ? Result.ok<GuardResponse>()
-      : Result.fail<GuardResponse>(`Text is greater than ${numChars} chars.`);
+      : Result.fail<GuardResponse>(
+          `${argumentName ?? 'Text'} is greater than ${numChars} chars.`
+        );
   }
 
   static againstNullOrUndefined(

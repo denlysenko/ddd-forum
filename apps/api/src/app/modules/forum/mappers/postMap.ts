@@ -41,7 +41,7 @@ export class PostMap implements Mapper<Post> {
   static toPersistence(post: Post): any {
     return {
       total_num_comments: post.totalNumComments,
-      updatedAt: new Date().toString(),
+      updated_at: new Date(),
       title: post.title.value,
       post_id: post.postId.id.toString(),
       member_id: post.memberId.id.toString(),

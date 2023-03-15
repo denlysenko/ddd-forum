@@ -132,7 +132,7 @@ export class PrismaPostRepo implements IPostRepo {
   }
 
   async save(post: Post): Promise<void> {
-    const exists = this.exists(post.postId);
+    const exists = await this.exists(post.postId);
     const isNewPost = !exists;
     const rawPost = PostMap.toPersistence(post);
 

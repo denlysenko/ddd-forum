@@ -42,16 +42,17 @@ model Member {
 }
 
 model Post {
-  post_id           String   @id @default(uuid()) @db.Uuid
-  type              String   @db.VarChar(30)
-  title             String?  @db.Text
-  link              String?  @db.Text
-  slug              String   @db.VarChar(300)
-  points            Int      @default(0)
-  total_num_comment Int      @default(0)
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
-  member_id         String   @db.Uuid
+  post_id            String   @id @default(uuid()) @db.Uuid
+  type               String   @db.VarChar(30)
+  title              String?  @db.Text
+  text               String?  @db.Text
+  link               String?  @db.Text
+  slug               String   @db.VarChar(300)
+  points             Int      @default(0)
+  total_num_comments Int      @default(0)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  member_id          String   @db.Uuid
 
   member    Member     @relation(fields: [member_id], references: [member_id], onDelete: Cascade, onUpdate: Cascade)
   postVotes PostVote[]

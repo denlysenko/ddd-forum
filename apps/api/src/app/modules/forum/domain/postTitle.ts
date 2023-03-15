@@ -20,8 +20,16 @@ export class PostTitle extends ValueObject<PostTitleProps> {
       return Result.fail<PostTitle>(nullGuardResult.getErrorValue());
     }
 
-    const minGuardResult = Guard.againstAtLeast(this.minLength, props.value);
-    const maxGuardResult = Guard.againstAtMost(this.maxLength, props.value);
+    const minGuardResult = Guard.againstAtLeast(
+      this.minLength,
+      props.value,
+      'postTitle'
+    );
+    const maxGuardResult = Guard.againstAtMost(
+      this.maxLength,
+      props.value,
+      'postTitle'
+    );
 
     if (minGuardResult.isFailure) {
       return Result.fail<PostTitle>(minGuardResult.getErrorValue());

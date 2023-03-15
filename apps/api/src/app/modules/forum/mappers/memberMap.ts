@@ -7,9 +7,9 @@ import { Member } from '../domain/member';
 
 export class MemberMap implements Mapper<Member> {
   static toDomain(raw: any): Member {
-    const userNameOrError = UserName.create({ name: raw.BaseUser.username });
+    const userNameOrError = UserName.create({ name: raw.baseUser.username });
     const userIdOrError = UserId.create(
-      new UniqueEntityID(raw.BaseUser.base_user_id)
+      new UniqueEntityID(raw.baseUser.base_user_id)
     );
 
     const memberOrError = Member.create(
