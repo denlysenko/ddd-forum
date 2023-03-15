@@ -21,12 +21,13 @@ export class PrismaUserRepo implements IUserRepo {
   }
 
   async getUserByUserId(userId: string): Promise<User> {
+    console.log(userId);
     const baseUser = await this.#prisma.baseUser.findUnique({
       where: { base_user_id: userId },
     });
 
     if (!!baseUser === false) {
-      throw new Error('User not found.');
+      return undefined;
     }
 
     return UserMap.toDomain(baseUser);
@@ -48,10 +49,15 @@ export class PrismaUserRepo implements IUserRepo {
 
   async save(user: User): Promise<void> {
     const exists = await this.exists(user.email);
+    const rawUser = await UserMap.toPersistence(user);
 
     if (!exists) {
-      const rawUser = await UserMap.toPersistence(user);
       await this.#prisma.baseUser.create({
+        data: rawUser,
+      });
+    } else {
+      await this.#prisma.baseUser.update({
+        where: { base_user_id: user.id.toString() },
         data: rawUser,
       });
     }
