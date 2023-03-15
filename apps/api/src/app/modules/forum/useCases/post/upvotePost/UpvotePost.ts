@@ -38,15 +38,15 @@ export class UpvotePost
     let existingVotesOnPostByMember: PostVote[];
 
     try {
-      try {
-        member = await this.#memberRepo.getMemberByUserId(req.userId);
-      } catch (err) {
+      member = await this.#memberRepo.getMemberByUserId(req.userId);
+
+      if (!member) {
         return left(new MemberNotFoundError());
       }
 
-      try {
-        post = await this.#postRepo.getPostBySlug(req.slug);
-      } catch (err) {
+      post = await this.#postRepo.getPostBySlug(req.slug);
+
+      if (!post) {
         return left(new PostNotFoundError(req.slug));
       }
 

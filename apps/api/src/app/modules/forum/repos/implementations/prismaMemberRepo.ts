@@ -34,6 +34,10 @@ export class PrismaMemberRepo implements IMemberRepo {
       },
     });
 
+    if (!member) {
+      return undefined;
+    }
+
     return MemberMap.toDomain(member);
   }
 

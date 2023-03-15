@@ -25,9 +25,9 @@ export class GetPostBySlug
     const { slug } = req;
 
     try {
-      try {
-        postDetails = await this.#postRepo.getPostDetailsBySlug(slug);
-      } catch (err) {
+      postDetails = await this.#postRepo.getPostDetailsBySlug(slug);
+
+      if (!postDetails) {
         return left(new PostNotFoundError(slug));
       }
 

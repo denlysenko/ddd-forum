@@ -26,7 +26,7 @@ export class PrismaPostRepo implements IPostRepo {
   }
 
   async getPostDetailsBySlug(slug: string): Promise<PostDetails> {
-    const post = this.#prisma.post.findFirst({
+    const post = await this.#prisma.post.findFirst({
       where: {
         slug,
       },
@@ -36,14 +36,21 @@ export class PrismaPostRepo implements IPostRepo {
             baseUser: true,
           },
         },
+        postVotes: true,
       },
     });
+
+    if (!post) {
+      return undefined;
+    }
+
+    console.log(post);
 
     return PostDetailsMap.toDomain(post);
   }
 
   async getPostBySlug(slug: string): Promise<Post> {
-    const post = this.#prisma.post.findFirst({
+    const post = await this.#prisma.post.findFirst({
       where: {
         slug,
       },
@@ -55,6 +62,10 @@ export class PrismaPostRepo implements IPostRepo {
         },
       },
     });
+
+    if (!post) {
+      return undefined;
+    }
 
     return PostMap.toDomain(post);
   }
@@ -68,7 +79,8 @@ export class PrismaPostRepo implements IPostRepo {
           },
         },
       },
-      skip: offset ?? 15,
+      skip: offset ?? 0,
+      take: 15,
     });
 
     return posts.map((post) => PostDetailsMap.toDomain(post));
@@ -83,7 +95,8 @@ export class PrismaPostRepo implements IPostRepo {
           },
         },
       },
-      skip: offset ?? 15,
+      skip: offset ?? 0,
+      take: 15,
       orderBy: {
         points: 'desc',
       },

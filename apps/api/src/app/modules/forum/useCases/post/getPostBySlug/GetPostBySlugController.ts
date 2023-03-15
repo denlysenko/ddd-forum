@@ -4,6 +4,7 @@ import type { PostDTO } from '../../../dtos/postDTO';
 import { PostDetailsMap } from '../../../mappers/postDetailsMap';
 import type { GetPostBySlug } from './GetPostBySlug';
 import type { GetPostBySlugDTO } from './GetPostBySlugDTO';
+import { PostNotFoundError } from './GetPostBySlugErrors';
 
 export class GetPostBySlugController extends BaseController {
   #useCase: GetPostBySlug;
@@ -28,6 +29,8 @@ export class GetPostBySlugController extends BaseController {
         const error = result.value;
 
         switch (error.constructor) {
+          case PostNotFoundError:
+            return this.notFound(reply, error.getErrorValue().message);
           default:
             return this.fail(reply, error.getErrorValue().message);
         }

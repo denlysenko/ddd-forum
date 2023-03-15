@@ -17,10 +17,10 @@ export class PostDetailsMap implements Mapper<PostDetails> {
     const title = PostTitle.create({ value: raw.title }).getValue();
     const postType: PostType = raw.type;
 
-    const memberDetails = MemberDetailsMap.toDomain(raw.Member);
+    const memberDetails = MemberDetailsMap.toDomain(raw.member);
 
-    const votes: PostVote[] = raw.Votes
-      ? raw.Votes.map((v) => PostVoteMap.toDomain(v))
+    const votes: PostVote[] = raw.postVotes
+      ? raw.postVotes.map((v) => PostVoteMap.toDomain(v))
       : [];
 
     const postDetailsOrError = PostDetails.create({
@@ -29,7 +29,7 @@ export class PostDetailsMap implements Mapper<PostDetails> {
       type: raw.type,
       points: raw.points,
       numComments: raw.total_num_comments,
-      dateTimePosted: raw.createdAt,
+      dateTimePosted: raw.created_at,
       member: memberDetails,
       text:
         postType === 'text'
