@@ -81,6 +81,14 @@ export class ReplyToComment
       member = (memberResult.value as Result<Member>).getValue();
       parentComment = (parentCommentResult.value as Result<Comment>).getValue();
 
+      if (!post) {
+        return left(new PostNotFoundError(slug.value));
+      }
+
+      if (!member) {
+        return left(new MemberNotFoundError(userId));
+      }
+
       const commentTextOrError = CommentText.create({ value: req.comment });
 
       if (commentTextOrError.isFailure) {

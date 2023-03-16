@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import type { UnexpectedError } from '../../../../../shared/core/AppError';
+import { UnexpectedError } from '../../../../../shared/core/AppError';
+import type { Result } from '../../../../../shared/core/Result';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
 import { TextUtils } from '../../../../../shared/utils/TextUtils';
 import type { ReplyToComment } from './ReplyToComment';
@@ -57,10 +58,16 @@ export class ReplyToCommentController extends BaseController {
               reply,
               (error as MemberNotFoundError).getErrorValue().message
             );
-          default:
+          case UnexpectedError:
             return this.fail(
               reply,
               (error as UnexpectedError).getErrorValue().message
+            );
+          default:
+            return this.clientError(
+              reply,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (error as Result<any>).getErrorValue()
             );
         }
       }

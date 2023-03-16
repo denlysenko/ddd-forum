@@ -18,7 +18,7 @@ export const replyToCommentSchema = {
   params: {
     type: 'object',
     additionalProperties: false,
-    required: ['slug'],
+    required: ['commentId'],
     properties: {
       commentId: { type: 'string' },
     },
