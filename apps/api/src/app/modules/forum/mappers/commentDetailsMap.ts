@@ -34,10 +34,7 @@ export class CommentDetailsMap implements Mapper<CommentDetails> {
       wasDownvotedByMe: !!votes.find((v) => v.isDownvote()),
       childComments:
         raw.childComments && raw.childComments.length > 0
-          ? raw.childComments.map((child) => {
-              console.log({ child });
-              return CommentDetailsMap.toDomain(child);
-            })
+          ? raw.childComments.map((child) => CommentDetailsMap.toDomain(child))
           : [],
     });
 

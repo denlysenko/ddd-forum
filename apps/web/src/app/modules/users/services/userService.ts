@@ -33,6 +33,7 @@ export class UsersService extends BaseAPI implements IUsersService {
     try {
       await this.post('/users/logout', null, null, {
         authorization: this.authService.getToken('access-token'),
+        'Content-Type': 'application/json',
       });
       this.authService.removeToken('access-token');
       this.authService.removeToken('refresh-token');

@@ -44,8 +44,6 @@ export class PrismaPostRepo implements IPostRepo {
       return undefined;
     }
 
-    console.log(post);
-
     return PostDetailsMap.toDomain(post);
   }
 

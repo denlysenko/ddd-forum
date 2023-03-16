@@ -111,7 +111,6 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
     postId: PostId | string
   ): Promise<number> {
     postId = postId instanceof PostId ? (<PostId>postId).id.toString() : postId;
-    console.log('postId', postId);
 
     const result = await this.#prisma.$queryRaw`
       SELECT COUNT(*) FROM (

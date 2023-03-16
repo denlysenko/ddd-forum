@@ -38,7 +38,7 @@ export class PrismaCommentRepo implements ICommentRepo {
         },
         ...(memberId
           ? {
-              commentVote: {
+              commentVotes: {
                 some: {
                   member_id: memberId.id.toString(),
                 },
@@ -66,12 +66,12 @@ export class PrismaCommentRepo implements ICommentRepo {
     commentId: string,
     memberId?: MemberId
   ): Promise<CommentDetails> {
-    const comment = await this.#prisma.comment.findUnique({
+    const comment = await this.#prisma.comment.findFirst({
       where: {
         comment_id: commentId,
         ...(memberId
           ? {
-              commentVote: {
+              commentVotes: {
                 some: {
                   member_id: memberId.id.toString(),
                 },
