@@ -81,10 +81,28 @@ export class PrismaCommentRepo implements ICommentRepo {
       },
       include: {
         post: true,
-        member: true,
+        member: {
+          include: {
+            baseUser: true,
+          },
+        },
+        childComments: {
+          include: {
+            post: true,
+            member: {
+              include: {
+                baseUser: true,
+              },
+            },
+          },
+        },
         commentVotes: !!memberId,
       },
     });
+
+    if (!comment) {
+      return undefined;
+    }
 
     return CommentDetailsMap.toDomain(comment);
   }

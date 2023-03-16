@@ -32,6 +32,13 @@ export class CommentDetailsMap implements Mapper<CommentDetails> {
       points: raw.points,
       wasUpvotedByMe: !!votes.find((v) => v.isUpvote()),
       wasDownvotedByMe: !!votes.find((v) => v.isDownvote()),
+      childComments:
+        raw.childComments && raw.childComments.length > 0
+          ? raw.childComments.map((child) => {
+              console.log({ child });
+              return CommentDetailsMap.toDomain(child);
+            })
+          : [],
     });
 
     commentDetailsOrError.isFailure
@@ -53,7 +60,12 @@ export class CommentDetailsMap implements Mapper<CommentDetails> {
       text: commentDetails.text.value,
       member: MemberDetailsMap.toDTO(commentDetails.member),
       createdAt: commentDetails.createdAt,
-      childComments: [],
+      childComments:
+        commentDetails.childComments && commentDetails.childComments.length > 0
+          ? commentDetails.childComments.map((child) =>
+              CommentDetailsMap.toDTO(child)
+            )
+          : [],
       postTitle: commentDetails.postTitle.value,
       points: commentDetails.points,
       wasUpvotedByMe: commentDetails.wasUpvotedByMe,

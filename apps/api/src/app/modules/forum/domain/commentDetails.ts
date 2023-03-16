@@ -18,6 +18,7 @@ interface CommentDetailsProps {
   points: number;
   wasUpvotedByMe: boolean;
   wasDownvotedByMe: boolean;
+  childComments?: CommentDetails[];
 }
 
 export class CommentDetails extends ValueObject<CommentDetailsProps> {
@@ -89,5 +90,9 @@ export class CommentDetails extends ValueObject<CommentDetailsProps> {
 
   get wasDownvotedByMe(): boolean {
     return this.props.wasDownvotedByMe;
+  }
+
+  get childComments(): CommentDetails[] {
+    return this.props.childComments;
   }
 }

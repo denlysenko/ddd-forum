@@ -35,12 +35,12 @@ export class GetCommentByCommentId
         memberId = await this.#memberRepo.getMemberIdByUserId(req.userId);
       }
 
-      try {
-        comment = await this.#commentRepo.getCommentDetailsByCommentId(
-          req.commentId,
-          memberId
-        );
-      } catch (err) {
+      comment = await this.#commentRepo.getCommentDetailsByCommentId(
+        req.commentId,
+        memberId
+      );
+
+      if (!comment) {
         return left(new CommentNotFoundError(req.commentId));
       }
 

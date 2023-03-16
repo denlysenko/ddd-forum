@@ -85,9 +85,11 @@ model Comment {
   post_id           String   @db.Uuid
   parent_comment_id String?  @db.Uuid
 
-  member       Member        @relation(fields: [member_id], references: [member_id], onDelete: Cascade, onUpdate: Cascade)
-  post         Post          @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: Cascade)
-  commentVotes CommentVote[]
+  member        Member        @relation(fields: [member_id], references: [member_id], onDelete: Cascade, onUpdate: Cascade)
+  post          Post          @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: Cascade)
+  commentVotes  CommentVote[]
+  parentComment Comment?      @relation("ParentChildren", fields: [parent_comment_id], references: [comment_id])
+  childComments Comment[]     @relation("ParentChildren")
 
   @@map("comment")
 }
