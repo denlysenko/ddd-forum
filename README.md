@@ -37,8 +37,7 @@ docker-compose up
 4. Open up an additional console and then run:
 
 ```bash
-npm run setup:dev
-npm run start:both
+npm start -- web
 ```
 
 You can visit the app by going to `http://localhost:3000`.
