@@ -20,8 +20,16 @@ export class CommentText extends ValueObject<CommentTextProps> {
       return Result.fail<CommentText>(nullGuardResult.getErrorValue());
     }
 
-    const minGuardResult = Guard.againstAtLeast(this.minLength, props.value);
-    const maxGuardResult = Guard.againstAtMost(this.maxLength, props.value);
+    const minGuardResult = Guard.againstAtLeast(
+      this.minLength,
+      props.value,
+      'commentText'
+    );
+    const maxGuardResult = Guard.againstAtMost(
+      this.maxLength,
+      props.value,
+      'commentText'
+    );
 
     if (minGuardResult.isFailure) {
       return Result.fail<CommentText>(minGuardResult.getErrorValue());

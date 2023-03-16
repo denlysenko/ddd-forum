@@ -49,7 +49,11 @@ export class PrismaCommentRepo implements ICommentRepo {
       include: {
         post: true,
         commentVotes: !!memberId,
-        member: true,
+        member: {
+          include: {
+            baseUser: true,
+          },
+        },
       },
       take: 15,
       skip: offset ?? 0,

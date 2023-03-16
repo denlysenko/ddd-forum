@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { isProduction } from '../../../../config';
 import { hooks } from './hooks';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: isProduction ? [] : ['query', 'error', 'warn', 'info'],
+});
 
 prisma.$use(async (params, next) => {
   const result = await next(params);

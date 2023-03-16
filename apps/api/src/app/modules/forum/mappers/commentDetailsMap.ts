@@ -18,14 +18,14 @@ export class CommentDetailsMap implements Mapper<CommentDetails> {
       : [];
 
     const commentDetailsOrError = CommentDetails.create({
-      postTitle: PostTitle.create({ value: raw.Post.title }).getValue(),
+      postTitle: PostTitle.create({ value: raw.post.title }).getValue(),
       commentId: CommentId.create(
         new UniqueEntityID(raw.comment_id)
       ).getValue(),
       text: CommentText.create({ value: raw.text }).getValue(),
-      member: MemberDetailsMap.toDomain(raw.Member),
-      createdAt: raw.createdAt,
-      postSlug: PostSlug.createFromExisting(raw.Post.slug).getValue(),
+      member: MemberDetailsMap.toDomain(raw.member),
+      createdAt: raw.created_at,
+      postSlug: PostSlug.createFromExisting(raw.post.slug).getValue(),
       parentCommentId: raw.parent_comment_id
         ? CommentId.create(new UniqueEntityID(raw.parent_comment_id)).getValue()
         : null,

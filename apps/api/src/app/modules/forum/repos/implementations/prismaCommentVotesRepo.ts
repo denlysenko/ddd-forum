@@ -78,8 +78,8 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
         from post P
         join comment CM on CM.post_id = P.post_id
         join comment_vote CV on CV.comment_id = CM.comment_id
-        where P.post_id = ${postId}
-        and CV.type = "UPVOTE" 
+        where P.post_id::text = ${postId}
+        and CV.type = 'UPVOTE' 
         group by CV.comment_id
       ) as upvotes_total;
     `;
@@ -97,8 +97,8 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
         from post P
         join comment CM on CM.post_id = P.post_id
         join comment_vote CV on CV.comment_id = CM.comment_id
-        where P.post_id = ${postId}
-        and CV.type = "DOWNVOTE" 
+        where P.post_id::text = ${postId}
+        and CV.type = 'DOWNVOTE' 
         group by CV.comment_id
       ) as downvotes_total;
     `;
@@ -111,6 +111,7 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
     postId: PostId | string
   ): Promise<number> {
     postId = postId instanceof PostId ? (<PostId>postId).id.toString() : postId;
+    console.log('postId', postId);
 
     const result = await this.#prisma.$queryRaw`
       SELECT COUNT(*) FROM (
@@ -118,8 +119,8 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
         from post P
         join comment CM on CM.post_id = P.post_id
         join comment_vote CV on CV.comment_id = CM.comment_id
-        where P.post_id = ${postId}
-        and CV.type = "UPVOTE" 
+        where P.post_id::text = ${postId}
+        and CV.type = 'UPVOTE' 
         and CV.member_id != CM.member_id
         group by CV.comment_id
       ) as upvotes_total;
@@ -140,8 +141,8 @@ export class PrismaCommentVotesRepo implements ICommentVotesRepo {
         from post P
         join comment CM on CM.post_id = P.post_id
         join comment_vote CV on CV.comment_id = CM.comment_id
-        where P.post_id = ${postId}
-        and CV.type = "DOWNVOTE" 
+        where P.post_id::text = ${postId}
+        and CV.type = 'DOWNVOTE' 
         and CV.member_id != CM.member_id
         group by CV.comment_id
       ) as downvotes_total;

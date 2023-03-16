@@ -40,12 +40,12 @@ export class ReplyToPost implements UseCase<ReplyToPostDTO, Promise<Response>> {
 
       slug = slugOrError.getValue();
 
-      try {
-        [post, member] = await Promise.all([
-          this.#postRepo.getPostBySlug(slug.value),
-          this.#memberRepo.getMemberByUserId(userId),
-        ]);
-      } catch (err) {
+      [post, member] = await Promise.all([
+        this.#postRepo.getPostBySlug(slug.value),
+        this.#memberRepo.getMemberByUserId(userId),
+      ]);
+
+      if (!post || !member) {
         return left(new PostNotFoundError(slug.value));
       }
 
